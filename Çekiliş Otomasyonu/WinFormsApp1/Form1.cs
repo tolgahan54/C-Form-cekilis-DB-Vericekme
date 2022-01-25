@@ -70,32 +70,28 @@ namespace WinFormsApp1
 
         private void button4_Click(object sender, EventArgs e)
         {
+            
             SqlConnection con = new SqlConnection("Data Source=TOLGA\\WINCCPLUSMIG2014;Initial Catalog=AdventureWorks2014;Integrated Security=True");
+            SqlCommand cmd = new SqlCommand("select Name from HumanResources.Department",con);
+                
+            con.Open();
+            
+            var dr = cmd.ExecuteReader();
+            ArrayList Isimler = new ArrayList();
 
-                SqlCommand cmd = new SqlCommand("select name from HumanResources.Department where DepartmentID=1 ", con);
-                SqlCommand cmd2 = new SqlCommand("select name from HumanResources.Department where DepartmentID=2 ", con);
-                SqlCommand cmd3 = new SqlCommand("select name from HumanResources.Department where DepartmentID=3 ", con);
-                SqlCommand cmd4 = new SqlCommand("select name from HumanResources.Department where DepartmentID=4 ", con);
-                SqlCommand cmd5 = new SqlCommand("select name from HumanResources.Department where DepartmentID=5 ", con);
-                SqlCommand cmd6 = new SqlCommand("select name from HumanResources.Department where DepartmentID=6 ", con);
-                SqlCommand cmd7 = new SqlCommand("select name from HumanResources.Department where DepartmentID=7 ", con);
-                SqlCommand cmd8 = new SqlCommand("select name from HumanResources.Department where DepartmentID=8 ", con);
-                SqlCommand cmd9 = new SqlCommand("select name from HumanResources.Department where DepartmentID=9 ", con);
-                SqlCommand cmd10 = new SqlCommand("select name from HumanResources.Department where DepartmentID=10 ", con);
-                SqlCommand cmd11 = new SqlCommand("select name from HumanResources.Department where DepartmentID=11 ", con);
-                con.Open();
-                    listBox1.Items.Add(cmd.ExecuteScalar());
-                    listBox1.Items.Add(cmd2.ExecuteScalar());
-                    listBox1.Items.Add(cmd3.ExecuteScalar());
-                    listBox1.Items.Add(cmd4.ExecuteScalar());
-                    listBox1.Items.Add(cmd5.ExecuteScalar());
-                    listBox1.Items.Add(cmd6.ExecuteScalar());
-                    listBox1.Items.Add(cmd7.ExecuteScalar());
-                    listBox1.Items.Add(cmd8.ExecuteScalar());
-                    listBox1.Items.Add(cmd9.ExecuteScalar());
-                    listBox1.Items.Add(cmd10.ExecuteScalar());
-                    listBox1.Items.Add(cmd11.ExecuteScalar());
-                con.Close();
+            while (dr.Read())
+            {
+                Isimler.Add(dr["Name"]);
+            }
+
+            foreach (var item in Isimler)
+            {
+                listBox1.Items.Add(item);
+            }
+
+            dr.Close();
+            con.Close();
+
             
         }
 
